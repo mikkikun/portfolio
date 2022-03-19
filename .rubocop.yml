@@ -68,3 +68,6 @@ Metrics/MethodLength:
   Max: 20
   Exclude:
     - "db/migrate/*.rb"
+
+Rails/FilePath:
+    Enabled: false
