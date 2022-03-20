@@ -22,4 +22,7 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  database: app_production
+  username: root
+  password: <%= ENV['DATABASE_PASSWORD'] %>　# 環境変数を設定していない場合は空欄で
+  socket: /var/lib/mysql/mysql.sock
