@@ -5,6 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem 'bootstrap', '~> 4.1.1'
 gem 'jquery-rails'
 
+gem 'bcrypt',         '3.1.13'
 gem 'rails', '~> 6.1.5'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3', '~> 1.4'
