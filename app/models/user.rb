@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :microposts, dependent: :destroy
   attr_accessor :remember_token, :activation_token, :reset_token
 
   before_save :downcase_email
@@ -19,24 +20,21 @@ class User < ApplicationRecord
   validates :password,
             presence: true,
             length: { minimum: 6 }
-  
-            
-            
-            
+
   def create_reset_digest
     self.reset_token = User.new_token
     update_columns(reset_digest: User.digest(reset_token), reset_sent_at: Time.zone.now)
   end
-          
+
   def send_password_reset_email
     UserMailer.password_reset(self).deliver_now
-    end
+  end
 
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
-  
-private
+
+  private
 
   def create_activation_digest
     self.activation_token = User.new_token
@@ -54,8 +52,11 @@ private
 
   class << self
     def digest(string)
-      cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-                                                    BCrypt::Engine.cost
+      cost = if ActiveModel::SecurePassword.min_cost
+               BCrypt::Engine::MIN_COST
+             else
+               BCrypt::Engine.cost
+             end
       BCrypt::Password.create(string, cost: cost)
     end
 
@@ -67,33 +68,33 @@ private
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
+
     BCrypt::Password.new(digest).is_password?(token)
   end
 
-    def digest(string)
-      cost = if ActiveModel::SecurePassword.min_cost
-               BCrypt::Engine::MIN_COST
-             else
-               BCrypt::Engine.cost
-             end
-      BCrypt::Password.create(string, cost: cost)
-    end
+  def digest(string)
+    cost = if ActiveModel::SecurePassword.min_cost
+             BCrypt::Engine::MIN_COST
+           else
+             BCrypt::Engine.cost
+           end
+    BCrypt::Password.create(string, cost: cost)
   end
+end
 
-  def remember
-    self.remember_token = User.new_token
-    update_attribute(:remember_digest, User.digest(remember_token))
-  end
+def remember
+  self.remember_token = User.new_token
+  update_attribute(:remember_digest, User.digest(remember_token))
+end
 
-  def forget
-    update_attribute(:remember_digest, nil)
-  end
+def forget
+  update_attribute(:remember_digest, nil)
+end
 
-  def send_activation_email
-    UserMailer.account_activation(self).deliver_now
-  end
+def send_activation_email
+  UserMailer.account_activation(self).deliver_now
+end
 
-  def activate
-    update_attribute(:activated, true)
-  end
+def activate
+  update_attribute(:activated, true)
 end
