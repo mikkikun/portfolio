@@ -11,7 +11,7 @@
   }
 
   .log-list {
-    border-left: 1px solid $lantern-dark-white;
+    border-left: 1px solid ;
   }
 }
 
@@ -86,7 +86,7 @@ ol {
     text-align: center;
     padding-bottom: 2rem;
     margin-top: 0.1rem;
-    border-right: 1px solid $lantern-dark-white;
+    border-right: 1px solid ;
   }
 
   .col-log-memos {
@@ -94,8 +94,7 @@ ol {
 
     .log-time-and-edit {
       .log-time {
-        font-size: 1.2rem;
-        color: $lantern-yellow;
+        font-size: 1.2rem;;
       }
 
       .log-timestamp-inline {
@@ -120,17 +119,4 @@ ol {
 .pagination {
   margin-top: 1.6rem;
 
-  .page-item {
-    .page-link {
-      border: 1px solid $lantern-light-white;
-      background-color: $lantern-light-white;
-      color: $lantern-blue;
-    }
-  }
-
-  .page-item.active .page-link {
-    background-color: $lantern-blue;
-    border-color: $lantern-blue;
-    color: $lantern-light-white;
-  }
 }
