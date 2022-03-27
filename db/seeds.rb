@@ -21,6 +21,6 @@ end
 
 users = User.order(:created_at).take(3)
 50.times do
-  memo = Faker::Lorem.sentence(6)
-  users.each { |user| user.posts.create!(memo: memo) }
+  memo = Faker::Lorem.sentence(word_count: 6)
+  users.each { |user| user.microposts.create!(memo: memo) }
 end

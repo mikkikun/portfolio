@@ -2,6 +2,7 @@ inherit_from: .rubocop_todo.yml
 
 require:
   - rubocop-rails
+  - rubocop-faker
 
 # 対象外
 AllCops:

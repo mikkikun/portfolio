@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       if user.activated?
         log_in user
-        params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+        remember user if params[:session][:remember_me] == '1'
         redirect_back_or user
       else
         flash[:danger] = 'メールを確認してアクティベーションを済ませてください'

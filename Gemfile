@@ -50,6 +50,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'pre-commit'
   gem 'rubocop'
+  gem 'rubocop-faker'
   gem 'rubocop-rails'
   gem 'spring'
 end

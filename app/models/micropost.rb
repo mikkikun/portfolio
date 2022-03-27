@@ -1,10 +1,9 @@
-class Post < ApplicationRecord
+class Micropost < ApplicationRecord
   belongs_to :user
-  default_scope { order(created_at: :desc) }
-  has_one_attached :post_image
+  has_one_attached :picture
   default_scope { order(created_at: :desc) }
   validates :user_id, presence: true
-  validates :post_image, length: { maximum: 255 }
+  validates :memo, length: { maximum: 255 }
   validates :only_user_id, presence: true
   validate :validate_picture
 
@@ -15,7 +14,7 @@ class Post < ApplicationRecord
   private
 
   def only_user_id
-    memo.presence or picture.attached?
+    time.presence or memo.presence or picture.attached?
   end
 
   def validate_picture

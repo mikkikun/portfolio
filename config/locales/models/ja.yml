@@ -9,9 +9,10 @@ ja:
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード（再入力）
-      post:
-        content: 投稿
-        post_image: 画像
+      micropost:
+        time: 記録時間
+        memo: メモ
+        picture: 画像
         user_id: ユーザID
         only_user_id: 入力欄
   views:
@@ -20,5 +21,4 @@ ja:
       last: "最後 &raquo;"
       previous: "&lsaquo; 前"
       next: "次 &rsaquo;"
-      truncate: "..."  
-        
+      truncate: "..."
