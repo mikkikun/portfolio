@@ -9,5 +9,5 @@ Rails.application.routes.draw do
   resources :users
   resources :account_activations, only: [:edit]
   resources :password_resets, only: %i[new create edit update]
-  resources :posts, only: %i[create edit update destroy]
+  resources :microposts
 end

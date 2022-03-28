@@ -21,9 +21,52 @@ class User < ApplicationRecord
             presence: true,
             length: { minimum: 6 }
 
+  class << self
+    # ダイジェストを生成する
+    def digest(string)
+      cost = if ActiveModel::SecurePassword.min_cost
+               BCrypt::Engine::MIN_COST
+             else
+               BCrypt::Engine.cost
+             end
+      BCrypt::Password.create(string, cost: cost)
+    end
+
+    # トークンを生成する
+    def new_token
+      SecureRandom.urlsafe_base64
+    end
+  end
+
+  # トークンとダイジェストを認証する
+  def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+
+    BCrypt::Password.new(digest).is_password?(token)
+  end
+
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, User.digest(remember_token))
+  end
+
+  def forget
+    update_attribute(:remember_digest, nil)
+  end
+
+  def send_activation_email
+    UserMailer.account_activation(self).deliver_now
+  end
+
+  def activate
+    update_attribute(:activated, true)
+  end
+
   def create_reset_digest
     self.reset_token = User.new_token
-    update_columns(reset_digest: User.digest(reset_token), reset_sent_at: Time.zone.now)
+    update_attribute(:reset_digest,  User.digest(reset_token))
+    update_attribute(:reset_sent_at, Time.zone.now)
   end
 
   def send_password_reset_email
@@ -36,11 +79,6 @@ class User < ApplicationRecord
 
   private
 
-  def create_activation_digest
-    self.activation_token = User.new_token
-    self.activation_digest = User.digest(activation_token)
-  end
-
   def downcase_email
     email.downcase!
   end
@@ -49,52 +87,4 @@ class User < ApplicationRecord
     self.activation_token = User.new_token
     self.activation_digest = User.digest(activation_token)
   end
-
-  class << self
-    def digest(string)
-      cost = if ActiveModel::SecurePassword.min_cost
-               BCrypt::Engine::MIN_COST
-             else
-               BCrypt::Engine.cost
-             end
-      BCrypt::Password.create(string, cost: cost)
-    end
-
-    def new_token
-      SecureRandom.urlsafe_base64
-    end
-  end
-
-  def authenticated?(attribute, token)
-    digest = send("#{attribute}_digest")
-    return false if digest.nil?
-
-    BCrypt::Password.new(digest).is_password?(token)
-  end
-
-  def digest(string)
-    cost = if ActiveModel::SecurePassword.min_cost
-             BCrypt::Engine::MIN_COST
-           else
-             BCrypt::Engine.cost
-           end
-    BCrypt::Password.create(string, cost: cost)
-  end
-end
-
-def remember
-  self.remember_token = User.new_token
-  update_attribute(:remember_digest, User.digest(remember_token))
-end
-
-def forget
-  update_attribute(:remember_digest, nil)
-end
-
-def send_activation_email
-  UserMailer.account_activation(self).deliver_now
-end
-
-def activate
-  update_attribute(:activated, true)
 end

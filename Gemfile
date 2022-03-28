@@ -28,10 +28,12 @@ gem 'jbuilder', '~> 2.7'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
+gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'faker'
 gem 'kaminari'
 gem 'kaminari-bootstrap'
+gem 'mini_magick'
 gem 'mysql2', '>= 0.5.3' # バージョン0.5.3
 gem 'rails-i18n'
 

@@ -1,7 +1,8 @@
 <% provide(:title, @user.name) %>
 <div class="container show-container">
   <div class="row">
-  <%= link_to "プロフィール編集", edit_user_path(current_user), class: "btn btn-secondary btn-md btn-extend" %></li>
+<%= link_to "プロフィール編集", edit_user_path(current_user), class: "btn btn-secondary btn-md btn-extend" %></li>
+<%= link_to "新しいコメント", new_micropost_path, class: "btn btn-secondary btn-md btn-extend" %>
   </div>
   <div class="row">
     <div class="col">
@@ -9,3 +10,4 @@
     </div>
   </div>
 </div>
+
