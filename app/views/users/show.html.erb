@@ -3,8 +3,10 @@
   <div class="row">
 <%= link_to "プロフィール編集", edit_user_path(current_user), class: "btn btn-secondary btn-md btn-extend" %></li>
 <%= link_to "新しいコメント", new_micropost_path, class: "btn btn-secondary btn-md btn-extend" %>
+<%= render 'shared/stats' %>
   </div>
-  <div class="row">
+    <div class="row">
+  <%= render 'follow_form' if logged_in? %>
     <div class="col">
       <%= render 'layouts/log' %>
     </div>
