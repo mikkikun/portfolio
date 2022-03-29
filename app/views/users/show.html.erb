@@ -5,6 +5,10 @@
 <%= link_to "新しいコメント", new_micropost_path, class: "btn btn-secondary btn-md btn-extend" %>
   </div>
   <div class="row">
+  <section class="stats">
+      <%= render 'shared/stats' %>
+    </section>
+    <%= render 'follow_form' if logged_in? %>
     <div class="col">
       <%= render 'layouts/log' %>
     </div>
