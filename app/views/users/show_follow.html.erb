@@ -12,7 +12,7 @@
       <% if @users.any? %>
         <div class="user_avatars">
           <% @users.each do |user| %>
-            <%= link_to gravatar_with(user, size: 30), user %>
+            <%= link_to gravatar_for(user, size: 30), user %>
           <% end %>
         </div>
       <% end %>
@@ -24,7 +24,6 @@
       <ul class="users follow">
         <%= render @users %>
       </ul>
-      <%= will_paginate %>
     <% end %>
   </div>
 </div>
