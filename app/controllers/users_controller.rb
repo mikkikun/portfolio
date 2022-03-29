@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: %i[show edit update index following followers]
+  before_action :logged_in_user, only: %i[show edit update index destroy following followers]
   before_action :correct_user, only: %i[show edit update]
 
   def index
@@ -52,6 +52,13 @@ class UsersController < ApplicationController
     @users = @user.followers.page(params[:page])
     render 'show_follow'
   end
+
+  def destroy
+    @user = User.find(params[:id]) 
+    @user.destroy
+    flash[:notice] = 'ユーザーを削除しました。'
+    redirect_to :root #削除に成功すればrootページに戻る
+end
 
   private
 
