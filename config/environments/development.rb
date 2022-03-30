@@ -37,8 +37,8 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :letter_opener_web
-  host = 'localhost:3000'
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  host = 'http://localhost:3000/'
+  config.action_mailer.default_url_options = { host: host, protocol: 'http' }
   config.action_mailer.perform_caching = true
   config.active_support.deprecation = :log
   config.action_mailer.perform_deliveries = true

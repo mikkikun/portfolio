@@ -1,14 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) do
-    User.new(
-      name: 'Example User',
-      email: 'user@example.com',
-      password: 'foobar',
-      password_confirmation: 'foobar'
-    )
-  end
+  let(:user) { create(:user) }
 
   describe 'User' do
     it 'should be valid' do
@@ -60,16 +53,12 @@ RSpec.describe User, type: :model do
     it 'should accept valid addresses' do
       user.email = 'user@example.com'
       expect(user).to be_valid
-
       user.email = 'USER@foo.COM'
       expect(user).to be_valid
-
       user.email = 'A_US-ER@foo.bar.org'
       expect(user).to be_valid
-
       user.email = 'first.last@foo.jp'
       expect(user).to be_valid
-
       user.email = 'alice+bob@baz.cn'
       expect(user).to be_valid
     end
@@ -77,19 +66,14 @@ RSpec.describe User, type: :model do
     it 'should reject invalid addresses' do
       user.email = 'user@example,com'
       expect(user).to be_invalid
-
       user.email = 'user_at_foo.org'
       expect(user).to be_invalid
-
       user.email = 'user.name@example.'
       expect(user).to be_invalid
-
       user.email = 'foo@bar_baz.com'
       expect(user).to be_invalid
-
       user.email = 'foo@bar+baz.com'
       expect(user).to be_invalid
-
       user.email = 'foo@bar..com'
       expect(user).to be_invalid
     end
@@ -125,6 +109,14 @@ RSpec.describe User, type: :model do
       it 'is not too short' do
         user.password = user.password_confirmation = 'a' * 6
         expect(user).to be_valid
+      end
+    end
+  end
+
+  describe 'User model methods' do
+    describe 'authenticated?' do
+      it 'return false for a user with nil digest' do
+        expect(user.authenticated?(:remember, '')).to be_falsey
       end
     end
   end
