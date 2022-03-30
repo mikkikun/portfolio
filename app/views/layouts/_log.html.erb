@@ -13,9 +13,11 @@
             <div class="row">
               <span class="log-time col-3">
               <span class="col-7 log-timestamp log-timestamp-inline"><%= time_ago_in_words(micropost.created_at) %>前</span>
-              <span class="log-edit col-2"><%= link_to "投稿編集", edit_micropost_path(micropost), class: "btn btn-secondary btn-md btn-extend" %></li></span>
+              <span class="log-edit col-2"><%= link_to "投稿編集", edit_micropost_path(micropost), class: "btn btn-secondary btn-md btn-extend" %></span>
+              <%= render "likes/like", micropost: micropost %>
             </div>
           </div>
+          </li>
           <% if micropost.memo.present? %>
             <div class="log-memo"><%= micropost.memo %></div>
           <% end %>
