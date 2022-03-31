@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   resources :microposts, only: %i[new create edit destroy update]
   resources :likes, only: %i[create destroy]
   resources :relationships, only: %i[create destroy]
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end
