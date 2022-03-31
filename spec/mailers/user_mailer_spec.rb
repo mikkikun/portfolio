@@ -9,7 +9,7 @@ RSpec.describe UserMailer, type: :mailer do
       mail = UserMailer.account_activation(user)
       expect(mail.subject).to eq('【重要】Card Matchよりアカウント有効化のためのメールを届けました')
       expect(mail.to).to eq(['michael_3@example.com'])
-      expect(mail.from).to eq(['from@example.com'])
+      expect(mail.from).to eq(['noreply@example.com'])
       expect(mail.body.encoded.split(/\r\n/).map { |i| Base64.decode64(i) }.join).to include('Michael Example')
     end
   end
@@ -20,7 +20,7 @@ RSpec.describe UserMailer, type: :mailer do
       mail = UserMailer.password_reset(user)
       expect(mail.subject).to eq '【重要】Card Matchよりパスワード再設定のためのメールを届けました'
       expect(mail.to).to eq ['michael_4@example.com']
-      expect(mail.from).to eq ['from@example.com']
+      expect(mail.from).to eq ['noreply@example.com']
       expect(mail.body.encoded.split(/\r\n/).map { |i| Base64.decode64(i) }.join).to include 'Michael Example'
       expect(mail.body.encoded.split(/\r\n/).map { |i| Base64.decode64(i) }.join).to include user.reset_token
       expect(mail.body.encoded.split(/\r\n/).map { |i| Base64.decode64(i) }.join).to include CGI.escape(user.email)
